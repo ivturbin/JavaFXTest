@@ -1,7 +1,9 @@
 package UseDatabase;
 
 import java.io.PrintWriter;
+
 import java.sql.*;
+import org.apache.commons.codec.digest.DigestUtils;
 
 public class Database {
     PrintWriter pw = new PrintWriter(System.out, true);
@@ -9,11 +11,23 @@ public class Database {
     private String username;
     private String password;
     private Connection connection;
+    private Statement statement = null;
 
     public void connect(String username, String password) {
         this.username = username;
         this.password = password;
         connection = connection();
+
+        if (connection == null) {
+            return;
+        }
+
+        try {
+            statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY) ; //Чтобы можно было неоднократно проходить ResultSet
+            pw.println("Интерфейс доступа к БД создан");
+        } catch (SQLException e){
+            pw.println("Интерфейс доступа к БД не создан");
+        }
     }
 
     private Connection connection() {
@@ -30,9 +44,9 @@ public class Database {
 
         try {
             m_connection = DriverManager.getConnection(Config.URL, username, password);
-            pw.println("Соединение установлено");
+            pw.println("Соединение с БД установлено");
         } catch (SQLException e) {
-            pw.println("Соединение не установлено");
+            pw.println("Соединение с БД не установлено");
             e.printStackTrace();
         } catch (Exception e) {
             pw.println("Пароль введен некорректно");
@@ -47,13 +61,47 @@ public class Database {
     }
 
     public Statement getStatement() {
-        Statement m_statement = null;
+        return statement;
+    }
+
+    public boolean hasUser(String username) {
+        System.out.println("Проверка наличия пользователя");
+        ResultSet resultSet = null;
         try {
-            m_statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY) ; //Чтобы можно было неоднократно проходить ResultSet
-            pw.println("Интерфейс доступа к БД создан");
-        } catch (SQLException e){
-            pw.println("Интерфейс доступа к БД не создан");
+            resultSet = getStatement().executeQuery("SELECT rolname FROM pg_roles where rolname = '" + username + "'");
+        } catch (SQLException sqlException) {
+            System.out.println("Ошибка выполнения запроса при проверке наличия пользователя");
+            sqlException.printStackTrace();
         }
-        return m_statement;
+
+        try {
+            assert resultSet != null;
+            return resultSet.next();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.out.println("Ошибка получения данных при проверке наличия пользователя");
+        }
+        return false;
+    }
+
+    public boolean correctPassword(String username, String password) {
+        System.out.println("Проверка корректности пароля");
+        ResultSet resultSet = null;
+        String myHash = DigestUtils.md5Hex(password+username); //Пароль в постгрес хранится в виде хэш суммы для логина и пароля. Проверить правильность введенного пароля вычисляется эта сумма для сравнения
+
+        try {
+            resultSet = getStatement().executeQuery("SELECT usename FROM pg_shadow where usename = '" + username + "' and passwd = 'md5" + myHash + "'");
+        } catch (SQLException sqlException) {
+            System.out.println("Ошибка выполнения запроса при проверке корректности пароля");
+            sqlException.printStackTrace();
+        }
+
+        try {
+            assert resultSet != null;
+            return resultSet.next();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
     }
 }

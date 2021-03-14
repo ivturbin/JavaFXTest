@@ -13,6 +13,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import javax.xml.crypto.Data;
+
 public class LoginController {
 
     @FXML
@@ -32,42 +34,67 @@ public class LoginController {
 
     @FXML
     void initialize() {
-
+        Database database = new Database();
+        database.connect("suser", "pass");
+        if (!database.isConnected()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ошибка");
+            alert.setHeaderText(null);
+            alert.setContentText("Нет подключения к БД.");
+            alert.showAndWait();
+            loginButton.getScene().getWindow().hide();
+        }
         loginButton.setOnAction(actionEvent -> {
             System.out.println("Войти");
-            Database database = new Database();
-            database.connect(loginField.getCharacters().toString(), passwordField.getCharacters().toString());
-            if (database.isConnected()) {
-                login();
-            }
-            else {
+            String username = loginField.getText().trim();
+            String password = passwordField.getText().trim();
+            if (username.equals("")) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Ошибка");
                 alert.setHeaderText(null);
-                alert.setContentText("Не удалось подключиться к Базе данных.");
+                alert.setContentText("Введите логин.");
+                System.out.println("Логин не введен");
+                alert.showAndWait();
+            } else {
+                connect(username, password, database);
+            }
+        });
+    }
+    void connect(String username, String password, Database database) {
+            if (database.hasUser(username)) {
+                if (database.correctPassword(username, password)) {
+                    loginButton.getScene().getWindow().hide();
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(getClass().getResource("/UseDatabase/scenes/Data.fxml"));
+
+                    try {
+                        fxmlLoader.load();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    Parent root = fxmlLoader.getRoot();
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.setResizable(false);
+                    stage.showAndWait();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Ошибка");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Пароль введен неверно.");
+                    System.out.println("Введен некорректный пароль");
+                    alert.showAndWait();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Ошибка");
+                alert.setHeaderText(null);
+                alert.setContentText("Нет пользователя с таким логином.");
+                System.out.println("Введен некорректный логин");
                 alert.showAndWait();
             }
 
-        });
-
-    }
-
-    void login () {
-        loginButton.getScene().getWindow().hide();
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/UseDatabase/scenes/Data.fxml"));
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Parent root = fxmlLoader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.showAndWait();
     }
 }
 
