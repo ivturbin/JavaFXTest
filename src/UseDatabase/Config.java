@@ -1,6 +1,10 @@
 package UseDatabase;
 
 public class Config {
-    public static String URL = "jdbc:postgresql:ulsu";
-    public static String Driver = "org.postgresql.Driver";
+    public static final String URL = "jdbc:postgresql:ulsu";
+    public static final String DRIVER = "org.postgresql.Driver";
+    public static final String SUPERUSER_NAME = "suser";
+    public static final String SUPERUSER_PASSWORD = "pass";
+    public static String username = "";
+    public static String password = "";
 }

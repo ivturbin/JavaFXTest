@@ -2,12 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -16,12 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="318.0" prefWidth="769.0" style="-fx-background-color: #DEB887;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UseDatabase.DataController">
     <children>
-        <Label layoutX="69.0" layoutY="11.0" text="Меню">
-            <font>
-                <Font name="Times New Roman Bold Italic" size="32.0" />
-            </font>
-        </Label>
-      <TabPane layoutX="11.0" layoutY="48.0" prefHeight="261.0" prefWidth="615.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="50.0">
+      <TabPane layoutX="11.0" layoutY="5.0" prefHeight="308.0" prefWidth="634.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
         <tabs>
           <Tab text="Untitled Tab 1">
             <content>
@@ -35,11 +27,6 @@
           </Tab>
         </tabs>
       </TabPane>
-      <ImageView fitHeight="37.0" fitWidth="31.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/menu.png" />
-         </image>
-      </ImageView>
       <GridPane layoutX="645.0" layoutY="3.0" prefHeight="312.0" prefWidth="0.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="645.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="5.0" />
@@ -54,7 +41,7 @@
             <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="143.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-                <Button fx:id="showButton" mnemonicParsing="false" prefHeight="21.0" prefWidth="162.0" style="-fx-background-color: #DEB887; -fx-background-radius: 7; -fx-border-color: black; -fx-border-radius: 7;" text="Добавить" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Button fx:id="addButton" mnemonicParsing="false" prefHeight="21.0" prefWidth="162.0" style="-fx-background-color: #DEB887; -fx-background-radius: 7; -fx-border-color: black; -fx-border-radius: 7;" text="Добавить" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <font>
                         <Font name="Times New Roman Bold" size="16.0" />
                     </font>
@@ -65,12 +52,12 @@
                   <DropShadow />
                </effect>
                 </Button>
-            <Button fx:id="showButton1" mnemonicParsing="false" prefHeight="22.0" prefWidth="162.0" style="-fx-background-color: #DEB887; -fx-background-radius: 7; -fx-border-color: black; -fx-border-radius: 7;" text="Изменить" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button fx:id="editButton" mnemonicParsing="false" prefHeight="22.0" prefWidth="162.0" style="-fx-background-color: #DEB887; -fx-background-radius: 7; -fx-border-color: black; -fx-border-radius: 7;" text="Изменить" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="showButton11" mnemonicParsing="false" prefHeight="33.0" prefWidth="178.0" style="-fx-background-color: #DEB887; -fx-background-radius: 7; -fx-border-color: black; -fx-border-radius: 7;" text="Удалить" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="33.0" prefWidth="178.0" style="-fx-background-color: #DEB887; -fx-background-radius: 7; -fx-border-color: black; -fx-border-radius: 7;" text="Удалить" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>

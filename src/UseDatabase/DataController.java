@@ -19,7 +19,7 @@ public class DataController {
 
     @FXML
     void initialize() {
-        assert showButton != null : "fx:id=\"showButton\" was not injected: check your FXML file 'Data.fxml'.";
+
 
     }
 }

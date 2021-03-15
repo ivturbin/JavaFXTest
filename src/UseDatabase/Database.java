@@ -34,7 +34,7 @@ public class Database {
         Connection m_connection = null;
 
         try {
-            Class.forName(Config.Driver);
+            Class.forName(Config.DRIVER);
             pw.println("Драйвер подключен");
         } catch (ClassNotFoundException e) {
             pw.println("Драйвер не подключен");

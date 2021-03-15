@@ -35,7 +35,7 @@ public class LoginController {
     @FXML
     void initialize() {
         Database database = new Database();
-        database.connect("suser", "pass");
+        database.connect(Config.SUPERUSER_NAME, Config.SUPERUSER_PASSWORD);
         if (!database.isConnected()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ошибка");
@@ -60,6 +60,7 @@ public class LoginController {
             }
         });
     }
+
     void connect(String username, String password, Database database) {
             if (database.hasUser(username)) {
                 if (database.correctPassword(username, password)) {
@@ -94,7 +95,6 @@ public class LoginController {
                 System.out.println("Введен некорректный логин");
                 alert.showAndWait();
             }
-
     }
 }
 
