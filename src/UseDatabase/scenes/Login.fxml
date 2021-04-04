@@ -8,23 +8,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="360.0" style="-fx-background-color: #DEB887;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UseDatabase.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UseDatabase.LoginController">
    <children>
-      <AnchorPane layoutY="55.0" prefHeight="167.0" prefWidth="360.0" style="-fx-background-color: #FFEBCD;">
+      <AnchorPane layoutY="55.0" prefHeight="167.0" prefWidth="360.0">
          <children>
-            <TextField fx:id="loginField" layoutX="54.0" layoutY="14.0" prefHeight="32.0" prefWidth="252.0" promptText="Логин" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;">
+            <TextField fx:id="loginField" layoutX="54.0" layoutY="14.0" prefHeight="32.0" prefWidth="252.0" promptText="Логин">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="passwordField" layoutX="54.0" layoutY="58.0" prefHeight="32.0" prefWidth="252.0" promptText="Пароль" style="-fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10;">
+            <PasswordField fx:id="passwordField" layoutX="54.0" layoutY="58.0" prefHeight="32.0" prefWidth="252.0" promptText="Пароль">
                <font>
                   <Font size="14.0" />
                </font>
             </PasswordField>
-            <Button fx:id="loginButton" alignment="CENTER" graphicTextGap="1.0" layoutX="112.0" layoutY="121.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="137.0" style="-fx-background-radius: 7; -fx-border-radius: 7; -fx-border-color: black;" text="Войти" textOverrun="CLIP">
+            <Button fx:id="loginButton" alignment="CENTER" graphicTextGap="1.0" layoutX="112.0" layoutY="121.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="137.0" text="Войти" textOverrun="CLIP">
                <font>
-                  <Font name="Times New Roman Italic" size="14.0" />
+                  <Font name="Times New Roman" size="14.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -34,7 +34,7 @@
       </AnchorPane>
       <Label layoutX="108.0" layoutY="14.0" text="Авторизация">
          <font>
-            <Font name="Times New Roman Bold Italic" size="24.0" />
+            <Font name="Times New Roman Bold" size="24.0" />
          </font>
       </Label>
    </children>

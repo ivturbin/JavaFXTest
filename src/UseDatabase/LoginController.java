@@ -57,13 +57,16 @@ public class LoginController {
                 alert.showAndWait();
             } else {
                 connect(username, password, database);
+                database.disconnect();
             }
         });
     }
 
     void connect(String username, String password, Database database) {
             if (database.hasUser(username)) {
+                System.out.println("Ок");
                 if (database.correctPassword(username, password)) {
+                    System.out.println("Ок");
                     loginButton.getScene().getWindow().hide();
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("/UseDatabase/scenes/Data.fxml"));
@@ -78,6 +81,8 @@ public class LoginController {
                     Stage stage = new Stage();
                     stage.setScene(new Scene(root));
                     stage.setResizable(false);
+                    stage.getScene().getStylesheets().add("/UseDatabase/assets/JMetroDarkTheme.css");
+                    stage.setTitle("Работа с БД");
                     stage.showAndWait();
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);

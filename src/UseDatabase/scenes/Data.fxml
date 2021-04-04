@@ -1,68 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="318.0" prefWidth="769.0" style="-fx-background-color: #DEB887;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UseDatabase.DataController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0" prefWidth="949.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UseDatabase.DataController">
     <children>
-      <TabPane layoutX="11.0" layoutY="5.0" prefHeight="308.0" prefWidth="634.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
+      <TabPane fx:id="tabPane" prefHeight="422.0" prefWidth="949.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Untitled Tab 1">
+          <Tab fx:id="tabStudents" text="Студенты">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="328.0" prefWidth="451.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btnAddStud" disable="true" layoutX="810.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnAddStudPressed" prefHeight="30.0" prefWidth="125.0" text="Добавить" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman Bold" size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnEdit" disable="true" layoutX="810.0" layoutY="55.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="125.0" text="Изменить" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman Bold" size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnDelete" disable="true" layoutX="810.0" layoutY="97.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="125.0" text="Удалить" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman Bold" size="16.0" />
+                           </font>
+                        </Button>
+                        <Separator layoutX="798.0" layoutY="13.0" orientation="VERTICAL" prefHeight="367.0" prefWidth="8.0" />
+                        <TableView fx:id="tvStudents" disable="true" layoutX="14.0" layoutY="43.0" prefHeight="339.0" prefWidth="777.0">
+                          <columns>
+                            <TableColumn fx:id="lastNameColumn" editable="false" prefWidth="229.0" sortable="false" text="Фамилия" />
+                            <TableColumn fx:id="nameColumn" editable="false" prefWidth="176.0" sortable="false" text="Имя" />
+                              <TableColumn fx:id="secondNameColumn" editable="false" prefWidth="151.0" sortable="false" text="Отчество" />
+                              <TableColumn fx:id="birthDateColumn" editable="false" prefWidth="135.0" sortable="false" text="Дата рождения" />
+                              <TableColumn fx:id="isEnrolledColumn" editable="false" prefWidth="106.0" text="Числится?" />
+                          </columns>
+                        </TableView>
+                        <ComboBox fx:id="cmbStudGroup" layoutX="14.0" layoutY="13.0" onAction="#cmbStudGroupPresed" prefHeight="25.0" prefWidth="333.0" promptText="Группа" />
+                     </children>
+                  </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Untitled Tab 2">
+          <Tab fx:id="tabJournal" text="Ведомости">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ComboBox fx:id="cmbJourGroup" layoutX="14.0" layoutY="14.0" prefWidth="150.0" promptText="Группа" />
+                        <ComboBox fx:id="cmbSemester" layoutX="202.0" layoutY="14.0" prefHeight="25.0" prefWidth="96.0" promptText="Семестр" />
+                        <TableView editable="true" layoutX="14.0" layoutY="45.0" prefHeight="346.0" prefWidth="933.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
             </content>
           </Tab>
         </tabs>
       </TabPane>
-      <GridPane layoutX="645.0" layoutY="3.0" prefHeight="312.0" prefWidth="0.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="645.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-        <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="5.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="162.0" minWidth="10.0" prefWidth="129.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="5.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="68.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="143.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-                <Button fx:id="addButton" mnemonicParsing="false" prefHeight="21.0" prefWidth="162.0" style="-fx-background-color: #DEB887; -fx-background-radius: 7; -fx-border-color: black; -fx-border-radius: 7;" text="Добавить" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <font>
-                        <Font name="Times New Roman Bold" size="16.0" />
-                    </font>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <effect>
-                  <DropShadow />
-               </effect>
-                </Button>
-            <Button fx:id="editButton" mnemonicParsing="false" prefHeight="22.0" prefWidth="162.0" style="-fx-background-color: #DEB887; -fx-background-radius: 7; -fx-border-color: black; -fx-border-radius: 7;" text="Изменить" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Times New Roman Bold" size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="33.0" prefWidth="178.0" style="-fx-background-color: #DEB887; -fx-background-radius: 7; -fx-border-color: black; -fx-border-radius: 7;" text="Удалить" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <font>
-                  <Font name="Times New Roman Bold" size="16.0" />
-               </font>
-            </Button>
-         </children>
-      </GridPane>
     </children>
 </AnchorPane>

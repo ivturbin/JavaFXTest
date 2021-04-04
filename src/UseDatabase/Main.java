@@ -7,17 +7,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("scenes/Login.fxml"));
         primaryStage.setTitle("Работа с БД");
         primaryStage.setScene(new Scene(root, 360, 220));
         primaryStage.setResizable(false);
+        primaryStage.getScene().getStylesheets().add("/UseDatabase/assets/JMetroDarkTheme.css");
         primaryStage.show();
     }
-
-
     public static void main(String[] args) {
         launch(args);
     }
