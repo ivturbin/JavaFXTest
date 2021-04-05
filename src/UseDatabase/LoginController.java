@@ -13,8 +13,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.Data;
-
 public class LoginController {
 
     @FXML
@@ -34,9 +32,8 @@ public class LoginController {
 
     @FXML
     void initialize() {
-        Database database = new Database();
-        database.connect(Config.SUPERUSER_NAME, Config.SUPERUSER_PASSWORD);
-        if (!database.isConnected()) {
+        Database.connect();
+        if (Database.isNotConnected()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ошибка");
             alert.setHeaderText(null);
@@ -56,16 +53,15 @@ public class LoginController {
                 System.out.println("Логин не введен");
                 alert.showAndWait();
             } else {
-                connect(username, password, database);
-                database.disconnect();
+                connect(username, password);
             }
         });
     }
 
-    void connect(String username, String password, Database database) {
-            if (database.hasUser(username)) {
+    void connect(String username, String password) {
+            if (Database.hasUser(username)) {
                 System.out.println("Ок");
-                if (database.correctPassword(username, password)) {
+                if (Database.correctPassword(username, password)) {
                     System.out.println("Ок");
                     loginButton.getScene().getWindow().hide();
                     FXMLLoader fxmlLoader = new FXMLLoader();

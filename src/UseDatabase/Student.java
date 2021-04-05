@@ -1,17 +1,18 @@
 package UseDatabase;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Student {
     private int id;
     private String name;
     private String secondName;
     private String lastName;
-    private Date birthDate;
+    private LocalDate birthDate;
     private boolean isEnrolled;
     private String Enrolled;
     private int groupId;
-    Student(int id, String name, String secondName, String lastName, Date birthDate, boolean isEnrolled, int groupId){
+    Student(int id, String name, String secondName, String lastName, LocalDate birthDate, boolean isEnrolled, int groupId){
         this.id = id;
         this.name = name;
         this.secondName = secondName;
@@ -54,11 +55,11 @@ public class Student {
         this.secondName = secondName;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

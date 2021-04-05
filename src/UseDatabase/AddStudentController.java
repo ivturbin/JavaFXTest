@@ -2,10 +2,11 @@ package UseDatabase;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class AddStudentController {
 
@@ -25,9 +26,8 @@ public class AddStudentController {
     private Button addButton;
 
     @FXML
-    void isEnrolledCheckbox(ActionEvent event) {
-
-    }
+    private CheckBox isEnrolledCheckbox;
+    ArrayList<AddListener> listeners = new ArrayList<>();
 
     @FXML
     void initialize() {
@@ -39,7 +39,26 @@ public class AddStudentController {
 
     @FXML
     void setAddButton() {
+        Student student = new Student(0, nameField.getText(), secondNameField.getText(),
+                lastNameField.getText(), birthDatePicker.getValue()==null? LocalDate.EPOCH : birthDatePicker.getValue(), isEnrolledCheckbox.isSelected(), Database.getGroupId());
+        if(!Database.addStudent(student)) {
+            addButton.getScene().getWindow().hide();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ошибка");
+            alert.setHeaderText(null);
+            alert.setContentText("Студент не добавлен.");
+            alert.showAndWait();
+        } else {
+            addButton.getScene().getWindow().hide();
+            for (AddListener listener:
+                 listeners) {
+                listener.studentAdded();
+            }
+        }
+    }
 
+    public void addListener(AddListener addListener) {
+        listeners.add(addListener);
     }
 
     private void checkAddButton() {

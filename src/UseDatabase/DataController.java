@@ -1,27 +1,22 @@
 package UseDatabase;
 
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.Pair;
-import javafx.util.converter.BooleanStringConverter;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class DataController {
+public class DataController implements AddListener{
 
     @FXML
     private TabPane tabPane;
@@ -68,19 +63,22 @@ public class DataController {
     @FXML
     private TableColumn<Student, String> isEnrolledColumn;
 
-    private Database database = new Database();
     private ArrayList<Pair<Integer, String>> groups = new ArrayList<>();
-    private ArrayList<Student> students = new ArrayList<>();
+    private ArrayList<Student> currentStudents = new ArrayList<>();
 
     @FXML
     void initialize() {
-        database.connect(Config.SUPERUSER_NAME, Config.SUPERUSER_PASSWORD);
         databaseOK();
-        groups = database.getGroups();
-        students = database.getStudents();
+        groups = Database.getGroups();
         List<String> groupNames = new ArrayList<>();
         groups.forEach(pair -> groupNames.add(pair.getValue()));
         cmbStudGroup.setItems(FXCollections.observableArrayList(groupNames));
+
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("lastName"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("name"));
+        secondNameColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("secondName"));
+        birthDateColumn.setCellValueFactory(new PropertyValueFactory<Student, Date>("birthDate"));
+        isEnrolledColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("Enrolled"));
     }
 
     @FXML
@@ -95,39 +93,44 @@ public class DataController {
             e.printStackTrace();
         }
 
+        AddStudentController ctrl = fxmlLoader.getController();
+        ctrl.addListener(this);
+
         Parent root = fxmlLoader.getRoot();
+
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
         stage.getScene().getStylesheets().add("/UseDatabase/assets/JMetroDarkTheme.css");
         stage.setTitle("Добавить студента");
+
         stage.showAndWait();
     }
 
     @FXML
     void cmbStudGroupPresed() {
-        Pair<Integer, String> pair = groups.stream()
+        Pair<Integer, String> currentGroup = groups.stream()
                 .filter(group -> group.getValue() == cmbStudGroup.getValue().toString())
-                .collect(Collectors.toList()).get(0); //Получить имя группы из комбобокса, найти соответствующую запись в словаре групп (groups) и записать ее в pair
+                .collect(Collectors.toList()).get(0); //Получить имя группы из комбобокса, найти соответствующую запись в словаре групп (groups) и записать ее в currentGroup
 
-        ArrayList<Student> currentStudents = new ArrayList<>(students.stream()
-                .filter(student -> student.getGroupId() == pair.getKey())
+        Database.setGroupId(currentGroup.getKey());
+
+        setItemsToTable();
+
+    }
+
+    private void setItemsToTable() {
+        ArrayList<Student> currentStudents = new ArrayList<>(Database.getStudents().stream()
+                .filter(student -> student.getGroupId() == Database.getGroupId())
                 .collect(Collectors.toList())); //Получить лист студентов с совпадающим id_group
-
-        lastNameColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("lastName"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("name"));
-        secondNameColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("secondName"));
-        birthDateColumn.setCellValueFactory(new PropertyValueFactory<Student, Date>("birthDate"));
-        isEnrolledColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("Enrolled"));
-
-        tvStudents.setItems(FXCollections.observableArrayList(currentStudents));
+        tvStudents.setItems(javafx.collections.FXCollections.observableList(currentStudents));
         tvStudents.setDisable(false);
 
         btnAddStud.setDisable(false);
     }
 
     private void databaseOK() {
-        if (!database.isConnected()) {
+        if (Database.isNotConnected()) {
             btnAddStud.getScene().getWindow().hide();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ошибка");
@@ -137,4 +140,8 @@ public class DataController {
         }
     }
 
+    @Override
+    public void studentAdded() {
+        setItemsToTable();
+    }
 }
